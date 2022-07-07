@@ -1,10 +1,11 @@
-const { Schema, model } = require('mongoose');
-const thoughtSchema = require("./Thought")
+const mongoose = require('mongoose');
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
     {
-        userName: { type: String, unique: true, trim: true, required: true},
+        username: { type: String, unique: true, trim: true, required: true},
         email: { type: String, unique: true, required: true, match: /.+\@.+\..+/ },
+        thoughts: {type: mongoose.Schema.Types.ObjectId, ref: 'Thought'},
+        friends: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     },
     {
         toJSON: {
@@ -15,15 +16,15 @@ const userSchema = new Schema(
 )
 
 // Initialize the Comment model
-const User = model('user', userSchema);
+const User = mongoose.model('user', userSchema);
 
-User.create(
-    {
-      userName: 'Frank',
-      email: 'AnneFrank@gmail.com',
-    },
-    (err) => (err ? handleError(err) : console.log('Created new document'))
-  );
+// User.create(
+//     {
+//       userName: 'Frank',
+//       email: 'AnneFrank@gmail.com',
+//     },
+//     (err) => (err ? handleError(err) : console.log('Created new document'))
+//   );
   
 
 module.exports = User;

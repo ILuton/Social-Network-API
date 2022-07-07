@@ -1,46 +1,25 @@
-// const connection = require('../config/connection');
-// const { User, Thought, Reaction } = require('../models');
-// const {
-//   getRandomName,
-//   getRandomComments,
-//   getRandomPost,
-//   genRandomIndex,
-// } = require('./data');
+const connection = require('../config/connection');
+const { User } = require("../models/User")
+const { Thought } = require("../models/Thought")
+const { getRandomUserName, getRandomEmail, getRandomThought, getRandomReaction} = require("./data")
 
-// // Start the seeding runtime timer
-// console.time('seeding');
+connection.on('error', (err) => err);
 
-// // Creates a connection to mongodb
-// connection.once('open', async () => {
-//   // Delete the entries in the collection
-//   await Post.deleteMany({});
-//   await Comment.deleteMany({});
+connection.once('open', async () => {
+  console.log('connected');
 
-//   // Empty arrays for randomly generated posts and comments
-//   const comments = [...getRandomComments(10)];
-//   const posts = [];
+  const users = [];
+  users.push({
+    username: getRandomUserName(),
+    email: getRandomEmail(),
+    thoughts: getRandomThought(),
+    friends: getRandomUserName(),
+  });
 
-//   // Makes comments array
-//   const makePost = (text) => {
-//     posts.push({
-//       text,
-//       username: getRandomName().split(' ')[0],
-//       comments: [comments[genRandomIndex(comments)]._id],
-//     });
-//   };
+  await User.collection.insertMany(users);
 
-//   // Wait for the comments to be inserted into the database
-//   await Comment.collection.insertMany(comments);
 
-//   // For each of the comments that exist, make a random post of 10 words
-//   comments.forEach(() => makePost(getRandomPost(10)));
-
-//   // Wait for the posts array to be inserted into the database
-//   await Post.collection.insertMany(posts);
-
-//   // Log out a pretty table for comments and posts
-//   console.table(comments);
-//   console.table(posts);
-//   console.timeEnd('seeding complete 🌱');
-//   process.exit(0);
-// });
+  console.table(users);
+  console.info('Seeding complete! 🌱');
+  process.exit(0);
+});
