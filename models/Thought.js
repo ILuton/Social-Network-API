@@ -1,12 +1,12 @@
 const { Schema, model } = require('mongoose');
-const Reactions = require("./Reaction")
+const reactionSchema = require("./Reaction")
 
 
-const Thought = new Schema({
-    thoughtText : { type: String, required: true,  validate: validate('len', 1, 280) },
+const thoughtSchema = new Schema({
+    thoughtText : { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     username: { type: String, required: true},
-    reactions: [Reactions],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
@@ -15,5 +15,7 @@ const Thought = new Schema({
 
 });
   
+const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;
+

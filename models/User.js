@@ -1,12 +1,10 @@
 const { Schema, model } = require('mongoose');
-const Thought = require("./Thought")
+const thoughtSchema = require("./Thought")
 
-const User = new Schema(
+const userSchema = new Schema(
     {
         userName: { type: String, unique: true, trim: true, required: true},
         email: { type: String, unique: true, required: true, match: /.+\@.+\..+/ },
-        thoughts: [Thought],
-        friends: [User],
     },
     {
         toJSON: {
@@ -16,5 +14,16 @@ const User = new Schema(
     }
 )
 
+// Initialize the Comment model
+const User = model('user', userSchema);
+
+User.create(
+    {
+      userName: 'Frank',
+      email: 'AnneFrank@gmail.com',
+    },
+    (err) => (err ? handleError(err) : console.log('Created new document'))
+  );
+  
 
 module.exports = User;
