@@ -1,25 +1,33 @@
 const connection = require('../config/connection');
 const { User } = require("../models/User")
 const { Thought } = require("../models/Thought")
-const { getRandomUserName, getRandomEmail, getRandomThought, getRandomReaction} = require("./data")
+const mongodb = require('mongodb').MongoClient;
+const { userData } = require('./data');
+const express = require("express");
 
-connection.on('error', (err) => err);
+const app = express();
+const port = 3001;
 
-connection.once('open', async () => {
-  console.log('connected');
+const connectionStringURI = `mongodb://localhost:27017/socialNetworkDB`;
 
-  const users = [];
-  users.push({
-    username: getRandomUserName(),
-    email: getRandomEmail(),
-    thoughts: getRandomThought(),
-    friends: getRandomUserName(),
-  });
+let db;
 
-  await User.collection.insertMany(users);
+mongodb.connect(
+  connectionStringURI,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err, client) => {
+    db = client.db();
+    // Drops any documents, if they exist
+    db.collection('users').deleteMany({});
+    db.collection('users').insertMany(userData, (err, res) => {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(res.ops);
+    });
 
-
-  console.table(users);
-  console.info('Seeding complete! 🌱');
-  process.exit(0);
-});
+    app.listen(port, () => {
+      console.log(`Example app listening at http://localhost:${port}`);
+    });
+  }
+);

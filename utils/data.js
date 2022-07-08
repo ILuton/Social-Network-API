@@ -1,47 +1,22 @@
-const userName = [
-    "theBest",
-    "topCoder",
-    "computerWHiz",
-    "masterCoder"
+//  user data
+
+
+const userData = [
+  {
+    username: 'CoolKid2000',
+    email: "coolKid@gmail.com",
+    friends: ["62c83d86a694047257bd9d08"],
+  },
+  {
+    username: 'WeatherMan',
+    email: "weatherman@aol.com",
+    friends: ["62c83d86a694047257bd9d08", "62c83d86a694047257bd9d06" ],
+  },
+  {
+    username: 'FunCoder',
+    email: "funCoder@gmail.com",
+  }
 ]
 
-const email = [
-    "cool@gmail.com",
-    "awesome@gmail.com",
-    "rad@gmail.com",
-    "sweet@gmail.com"
-]
 
-const thoughts = [
-    "I should go to sleep",
-    "Why do dogs bark?",
-    "Are Aliens Real?",
-    "Summer is the best season"
-
-];
-
-const reactions = [
-    'I disagree!',
-    'This was awesome',
-    'Thank you for the great content',
-    'I Agree!',
-    'Great Job'
-  ];
-
-  const friends = userName;
-
-  const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-  const getRandomUserName = () =>
-  `${getRandomArrItem(userName)}`;
-
-  const getRandomEmail = () =>
-  `${getRandomArrItem(email)}`;
-
-  const getRandomThought = () =>
-  `${getRandomArrItem(thoughts)}`;
-  
-  const getRandomReaction = () =>
-  `${getRandomArrItem(reactions)}`;
-  
-  module.exports = { getRandomUserName, getRandomEmail, getRandomThought, getRandomReaction}
+module.exports = { userData }

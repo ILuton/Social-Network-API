@@ -15,16 +15,7 @@ const userSchema = new mongoose.Schema(
     }
 )
 
-// Initialize the Comment model
 const User = mongoose.model('user', userSchema);
 
-// User.create(
-//     {
-//       userName: 'Frank',
-//       email: 'AnneFrank@gmail.com',
-//     },
-//     (err) => (err ? handleError(err) : console.log('Created new document'))
-//   );
-  
 
 module.exports = User;
