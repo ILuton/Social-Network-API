@@ -42,6 +42,39 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
       },
 
-      // deleteFriend
+      // addFriend
+
+      createFriend(req, res) {
+        User.findOneAndUpdate( { _id: req.params.userId }, { $addToSet:{ friends: req.params.friendId }} )
+        .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'Friend not added' })
+          : res.json(`Friend added`)
+      )
+      .catch((err) => res.status(500).json(err));
+
+      },
+
+      deleteFriend(req, res) {
+        User.findOneAndUpdate( { _id: req.params.userId }, { $pull: { friends: req.params.friendId }} )
+        .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'Friend not removed' })
+          : res.json(`Friend removed`)
+      )
+      .catch((err) => res.status(500).json(err));
+
+      }
 
 };
+
+// app.get('/sale-over-30', (req, res) => {
+//   db.collection('groceryList')
+//     // Use dot notation for embedded document
+//     // $gte specifies we want percentage discounts greater than 30
+//     .find({ 'promotion.percentage_discount': { $gte: 30 } })
+//     .toArray((err, results) => {
+//       if (err) throw err;
+//       res.send(results);
+//     });
+// });

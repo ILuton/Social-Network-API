@@ -15,13 +15,13 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // create a new user
+  // create a new thought
   createThought(req, res) {
     Thought.create(req.body)
       .then((dbThoughtData) => res.json(dbThoughtData))
       .catch((err) => res.status(500).json(err));
   },
-    // delete a user
+    // delete a thought
     deleteThought(req, res) {
         Thought.findOneAndDelete({ _id: req.params.thoughtId })
         .then((thought) =>
@@ -31,7 +31,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
       },
-    //   update user
+    //   update a thought
       updateThought(req, res) {
         Thought.findOneAndUpdate({ _id: req.params.thoughtId }, req.body )
         .then((thought) =>
@@ -41,4 +41,32 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
       },
+
+      //  create a new reaction 
+
+      createReaction(req, res) {
+        Thought.findOneAndUpdate( { _id: req.params.thoughtId }, { $addToSet:{ reactions : req.body}} )
+        .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'Reaction not  added' })
+          : res.json(`Reaction added`)
+      )
+      .catch((err) => res.status(500).json(err));
+
+      },
+
+      // delete a reaction 
+
+      deleteReaction(req, res) {
+        Thought.findOneAndUpdate( { _id: req.params.thoughtId }, { $pull: { reactions: req.params.reactionId }} )
+        .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: 'thought not removed' })
+          : res.json(`thought removed`)
+      )
+      .catch((err) => res.status(500).json(err));
+
+      }
+
+      
 };
