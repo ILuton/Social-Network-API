@@ -1,4 +1,5 @@
 const Thought = require('../models/Thought');
+const User = require('../models/User')
 
 module.exports = {
   getThought(req, res) {
@@ -18,7 +19,11 @@ module.exports = {
   // create a new thought
   createThought(req, res) {
     Thought.create(req.body)
-      .then((dbThoughtData) => res.json(dbThoughtData))
+      .then((dbThoughtData) => 
+      !dbThoughtData
+          ? res.status(404).json({ message: 'thought not  added' })
+          : res.json(`thought added`)
+      )
       .catch((err) => res.status(500).json(err));
   },
     // delete a thought
@@ -58,7 +63,7 @@ module.exports = {
       // delete a reaction 
 
       deleteReaction(req, res) {
-        Thought.findOneAndUpdate( { _id: req.params.thoughtId }, { $pull: { reactions: req.params.reactionId }} )
+        Thought.findOneAndUpdate( { _id: req.params.thoughtId }, { $pull: { reactions: {_id: req.body} }} )
         .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'thought not removed' })
