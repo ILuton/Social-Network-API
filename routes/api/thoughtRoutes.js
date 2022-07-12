@@ -5,7 +5,8 @@ router.route('/').get(getThought).post(createThought);
 
 router.route('/:thoughtId').get(getSingleThought).delete(deleteThought).put(updateThought);
 
-router.route('/:thoughtId/reactions').put(createReaction).put(deleteReaction);
+router.route('/:thoughtId/reactions').post(createReaction);
+router.route('/:thoughtId/reactions/:id').delete(deleteReaction);
 
 
 

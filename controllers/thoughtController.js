@@ -19,11 +19,16 @@ module.exports = {
   // create a new thought
   createThought(req, res) {
     Thought.create(req.body)
-      .then((dbThoughtData) => 
-      !dbThoughtData
+      .then((ThoughtData) => {
+        return User.findOneAndUpdate({ _id: req.body.userId },
+          { $addToSet: { thoughts : ThoughtData._id} }
+      );
+        })
+      .then((data) => 
+      !data
           ? res.status(404).json({ message: 'thought not  added' })
           : res.json(`thought added`)
-      )
+        )
       .catch((err) => res.status(500).json(err));
   },
     // delete a thought
@@ -63,7 +68,7 @@ module.exports = {
       // delete a reaction 
 
       deleteReaction(req, res) {
-        Thought.findOneAndUpdate( { _id: req.params.thoughtId }, { $pull: { reactions: {_id: req.body} }} )
+        Thought.findOneAndUpdate( { _id: req.params.thoughtId }, { $pull: { reactions: {reactionId: req.params.reactionId } }} )
         .then((thought) =>
         !thought
           ? res.status(404).json({ message: 'thought not removed' })
