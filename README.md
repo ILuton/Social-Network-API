@@ -2,7 +2,7 @@
 
 ## Description
 
-The purpose of this project is to practice building a backend database with MongoDB and using Mongoose as an ODM. 
+The purpose of this project is to practice building a mockup social media backend database with MongoDB and using Mongoose as an ODM. The walkthrought video can be viewed here: https://youtu.be/-Ji5xz8o510. 
 
 ## Table of Contents
 
@@ -19,12 +19,13 @@ The purpose of this project is to practice building a backend database with Mong
   - [Questions](#questions)
 
 ## Installation
-To use this application you can clone the repo into your files then use Insomnia to test in locally. 
+To use this application you can clone the repo into your files then use Insomnia to test in locally. Running Npm seeds will only generate mock users. Thoughts, friends, and reaction will be empty until you add some in. 
 
 ## Usage
 To use this you will need to test everything locally in Insomnia or another application that can test API routes.
 
-![alt text](undefined)
+![alt text](./utils/images/Screen%20Shot%202022-07-13%20at%2010.03.33%20AM.png)
+![alt text](./utils/images/Screen%20Shot%202022-07-13%20at%2010.04.29%20AM.png)
 
 ## Credits
 Just Myself
